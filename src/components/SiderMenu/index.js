@@ -8,7 +8,7 @@ import styles from './index.less';
 
 const SubMenu = Menu.SubMenu;
 
-function getMenuOrSubMenu(menu) {
+function getMenuOrSubMenu(menu, pathname) {
     return menu.map((item)=>(
         item.children?(
             <SubMenu
@@ -24,10 +24,12 @@ function getMenuOrSubMenu(menu) {
             </SubMenu>
         ):(
             <Menu.Item key={item.path}>
-                <Link to={item.path}>
-                    { item.icon&&(<Icon type={item.icon} />) }
-                    <span>{item.name}</span>
-                </Link>
+                {
+                    <Link to={item.path}>
+                        { item.icon&&(<Icon type={item.icon} />) }
+                        <span>{item.name}</span>
+                    </Link>
+                }
             </Menu.Item>
         )
     ))
@@ -38,13 +40,12 @@ export default class SiderMenu extends Component{
     render(){
         const {pathname} = this.props;
         let selectedKeys = [pathname];
-
         return(
             <Menu
             mode="inline"
             theme="dark"
             selectedKeys = {selectedKeys}>
-                { getMenuOrSubMenu(menuData) }
+                { getMenuOrSubMenu(menuData, pathname) }
             </Menu>
         )
     }

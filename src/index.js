@@ -3,6 +3,7 @@ import 'url-polyfill';
 import dva from 'dva';
 
 import createHistory from 'history/createHashHistory';
+import createLoading from 'dva-loading';
 import 'moment/locale/zh-cn';
 
 import './index.less';
@@ -13,7 +14,7 @@ const app = dva({
 });
 
 // 2. Plugins
-// app.use({});
+app.use(createLoading());
 
 // 3. Model
 app.model(require('./models/global').default);

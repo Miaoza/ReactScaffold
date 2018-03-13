@@ -12,11 +12,6 @@ function RouterConfig({ app, history }) {
         <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={routerData['/login'].component} />
-                {
-                    // <Route exact path="/" render={
-                    // props => <BaseLayouts {...props} routerData={routerData} />
-                    // } />
-                }
                 <BaseLayouts routerData={routerData} />
             </Switch>
         </Router>

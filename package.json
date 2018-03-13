@@ -10,6 +10,8 @@
     "antd": "^3.2.3",
     "babel-plugin-import": "^1.6.5",
     "dva": "^2.1.0",
+    "dva-loading": "^1.0.4",
+    "qs": "^6.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "url-polyfill": "^1.0.11"

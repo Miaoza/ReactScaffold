@@ -1,20 +1,20 @@
+import { queryUsers } from '../services/user';
 
 export default {
     namespace: 'users',
     state: {
-        users: [],
+        users: [{id: 1}],
         user: {},
     },
     effects: {
         *fetchList({ params }, { call, put }){
-            //yield call(url, params)
+            console.log(params);
+            const res = yield call(queryUsers, params);
+            console.log(res);
             yield put({
                 type: 'queryUserList',
                 users: [{id: 1, name: 'nianko'}]
             })
-        },
-        *fetch({ userId }, { call, put }){
-            console.log('get user detail')
         }
     },
     reducers: {
@@ -22,12 +22,6 @@ export default {
             return{
                 ...state,
                 users: users
-            }
-        },
-        queryUser(state, { user }){
-            return {
-                ...state,
-                user: user
             }
         }
     }

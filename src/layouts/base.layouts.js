@@ -4,15 +4,24 @@ import { Layout, Button, Icon } from 'antd';
 import { Route, Redirect, Switch, routerRedux, Link } from 'dva/router';
 
 import SiderMenu from '../components/SiderMenu';
-import menuData from '../config/menu.config';
+import GlobalHeader from '../components/GlobalHeader';
 
 import logo from '../assets/yay.jpg';
 
 import styles from './base.layouts.less';
 
-
 const { Header, Content, Sider } = Layout;
+
+@connect(({current})=>({
+    current: current
+}))
 export default class BaseLayouts extends Component{
+    componentDidMount(){
+        this.props.dispatch({
+            type: 'current/fetch'
+        })
+    }
+
     state = {
         collapsed: false,
     };
@@ -24,8 +33,7 @@ export default class BaseLayouts extends Component{
     }
 
     render(){
-        console.log(this.props)
-        const { routerData } = this.props;
+        const { routerData, dispatch, current } = this.props;
         return(
             <Layout className={styles.main}>
                 <Sider
@@ -46,11 +54,11 @@ export default class BaseLayouts extends Component{
 
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
-                        <Icon
-                        className="trigger"
-                        type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                        onClick={this.toggle}
-                        style={{ fontSize: 24, color: '#08c', margin: 8 }}
+                        <GlobalHeader
+                        collapsed={this.state.collapsed}
+                        toggleHandle={this.toggle}
+                        currentUser={current}
+                        dispatch = {dispatch}
                         />
                     </Header>
 
@@ -59,7 +67,6 @@ export default class BaseLayouts extends Component{
                             <Switch>
                                 {
                                     Object.keys(routerData).map((key)=>{
-                                        console.log(key);
                                         return '/'==key?(
                                             <Redirect key={key} exact from="/" to="/home" component={routerData['/home'].component} />
                                         ):(

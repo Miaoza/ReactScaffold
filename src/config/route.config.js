@@ -15,15 +15,12 @@ export function dynamicWrapper(app, models=[], component){
 function getRouterData(app){
     const routerData = {
         '/': {
-            component: dynamicWrapper(app, [], ()=>import('../layouts/base.layouts'))
-         },
-         '/login': {
-             component: dynamicWrapper(app, [], ()=>import('../routes/login/login'))
+            component: dynamicWrapper(app, ['login', 'current'], ()=>import('../layouts/base.layouts'))
          },
         '/home': {
-            component: dynamicWrapper(app, [], ()=>import('../routes/home/home'))
+            component: dynamicWrapper(app, ['current'], ()=>import('../routes/home/home'))
         },
-        ...userRouters(app)
+        ...userRouters(app),
     }
     return routerData;
 }

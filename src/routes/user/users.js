@@ -4,12 +4,24 @@ import { Link } from 'dva/router';
 
 import styles from './users.less';
 
-@connect(({users, loading})=>({
-    ...users
-}))
+@connect((state)=>{
+    console.log(state)
+    return {
+        users: state.users
+    }
+})
 export default class Users extends Component{
+    componentDidMount(){
+        console.log(this.props)
+        this.props.dispatch({
+            type: 'users/fetchList',
+            params: {
+                limit: 10,
+                offset: 0
+            }
+        });
+    }
     render(){
-        console.log(this.props);
         return (
             <div>
                 Users List
